@@ -12,7 +12,7 @@ export default function FeaturesSection() {
   return (
     <div className="bg-[url('../features_background.jpg')] bg-cover bg-center py-16 mt-3">
       <div className="bg-black bg-opacity-30 rounded-lg max-w-7xl mx-auto text-center px-5 py-3">
-        <h2 className="text-4xl font-extrabold text-white mb-6">Why Choose 🕮 𝐅𝐢𝐧𝐝𝐌𝐲𝐁𝐨𝐨𝐤𝐍𝐨𝐰 ?</h2>
+        <h2 className="text-4xl font-extrabold text-white mb-6">Why Choose 📖FindMyBookNow ?</h2>
         <p className="text-lg text-gray-100 mb-12">Effortlessly search for books, compare prices, and access previews from various platforms, all in one place.</p>
         <div className="flex flexbox my-5 justify-center">
         <img className="rounded-lg w-full sm:w-1/2 md:w-1/3 lg:w-1/4"

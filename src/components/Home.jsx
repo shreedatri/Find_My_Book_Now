@@ -106,7 +106,7 @@ const Home = () => {
                         <div className="bg-slate-900 bg-opacity-40 rounded-lg px-4 py-5 w-full md:w-1/2 text-center flex flex-col justify-center mt-6">
 
                             <h1 className="font-semibold text-4xl sm:text-5xl md:text-6xl text-white">
-                                🕮 𝐅𝐢𝐧𝐝𝐌𝐲𝐁𝐨𝐨𝐤𝐍𝐨𝐰
+                            📖FindMyBookNow
 
                             </h1>
 
@@ -195,7 +195,7 @@ const Home = () => {
                                     {startIndex > 0 && (
                                         <button
                                             onClick={() => search(null, Math.max(0, startIndex - maxResults))} disabled={startIndex === 0}
-                                            className="bg-white text-white shadow-sm p-3 rounded-full my-10 active:bg-slate-100"
+                                            className="bg-white text-white  p-3 rounded-full my-10 active:bg-slate-100"
                                         >
                                             <svg class="w-4 h-3 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 8 14">
                                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 1 1.3 6.326a.91.91 0 0 0 0 1.348L7 13" />
