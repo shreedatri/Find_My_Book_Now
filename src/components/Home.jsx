@@ -106,7 +106,7 @@ const Home = () => {
                         <div className="bg-slate-900 bg-opacity-40 rounded-lg px-4 py-5 w-full md:w-1/2 text-center flex flex-col justify-center mt-6">
 
                             <h1 className="font-semibold text-4xl sm:text-5xl md:text-6xl text-white">
-                            📖FindMyBookNow
+                                📖FindMyBookNow
 
                             </h1>
 
@@ -173,7 +173,7 @@ const Home = () => {
 
                                             <h3 className='text-xl text-center font-bold text-black'>{book.volumeInfo.title}</h3>
                                             <p className='text-semibold text-center truncate text-black'>{book.volumeInfo.authors?.join(', ') || 'Unknown Author'}</p>
-                                            <hr className='my-2 mx-0 w-full h-2'/>
+                                            <hr className='my-2 mx-0 w-full h-2' />
                                             <div className="flex justify-center">
                                                 <img src={
                                                     book.volumeInfo.imageLinks?.thumbnail ||
@@ -192,32 +192,34 @@ const Home = () => {
                                 </div>
                                 {/*pages*/}
                                 <div className="flex justify-center gap-4 p-1 mb-6">
-                                    {startIndex > 0 && (
-                                        <button
-                                            onClick={() => search(null, Math.max(0, startIndex - maxResults))} disabled={startIndex === 0}
-                                            className="bg-white text-white  p-3 rounded-full my-10 active:bg-slate-100"
-                                        >
-                                            <svg class="w-4 h-3 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 8 14">
-                                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 1 1.3 6.326a.91.91 0 0 0 0 1.348L7 13" />
-                                            </svg>
-                                        </button>
-                                    )}
+
+                                    <button
+                                        onClick={() => search(null, Math.max(0, startIndex - maxResults))}
+                                        disabled={startIndex === 0 || loading}
+                                        className="bg-white text-white  p-3 rounded-full my-10 active:bg-slate-100"
+                                    >
+                                        <svg class="w-4 h-3 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 8 14">
+                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 1 1.3 6.326a.91.91 0 0 0 0 1.348L7 13" />
+                                        </svg>
+                                    </button>
+
                                     <div className="flex items-center justify-center my-8">
                                         <span className="px-4 py-2 rounded-lg bg-gray-100 text-gray-800 text-base font-medium shadow-sm">
-                                            {Math.floor(startIndex / maxResults) + 1}
+                                            Page {Math.floor(startIndex / maxResults) + 1} of {totalPages || 1}
                                         </span>
                                     </div>
-                                    {books.length === maxResults && (
-                                        <button
-                                            onClick={() => search(null, startIndex + maxResults)} disabled={books.length < maxResults}
-                                            className="bg-white text-white p-3 rounded-full my-10 active:bg-slate-100"
 
-                                        >
-                                            <svg class="w-4 h-3 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 8 14">
-                                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 13 5.7-5.326a.909.909 0 0 0 0-1.348L1 1" />
-                                            </svg>
-                                        </button>
-                                    )}
+                                    <button
+                                        onClick={() => search(null, startIndex + maxResults)}
+                                        disabled={Math.floor(startIndex / maxResults) + 1 >= totalPages || loading}
+                                        className="bg-white text-white p-3 rounded-full my-10 active:bg-slate-100"
+
+                                    >
+                                        <svg class="w-4 h-3 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 8 14">
+                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 13 5.7-5.326a.909.909 0 0 0 0-1.348L1 1" />
+                                        </svg>
+                                    </button>
+
                                 </div>
                             </div>
                         ) : (
@@ -234,7 +236,7 @@ const Home = () => {
                         <div className="bg-white rounded-lg shadow-lg p-8 w-3/4 max-h-[80vh] overflow-y-auto">
                             <button
                                 onClick={closePopup}
-                                className="bg-white  rounded-full active:bg-slate-100  text-black my-2  p-4"
+                                className="bg-white  rounded-full active:bg-slate-100  text-black my-2  p-4 fixed"
                             ><svg class="w-4 h-4 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5H1m0 0 4 4M1 5l4-4" />
                                 </svg>
@@ -290,7 +292,7 @@ const Home = () => {
                                         >
                                             Preview
                                         </a></button>) : (
-                                            
+
                                     <button className='bg-white rounded active:bg-slate-100 border shadow mt-3 p-2 hover:scale-105'>
                                         <a
                                             href={selectedBook.volumeInfo.infoLink}
@@ -301,6 +303,35 @@ const Home = () => {
                                             Learn More
                                         </a></button>
                                 )}
+                                <div className="flex justify-center gap-5 m-2">
+                                    {/* Copy link button */}
+                                    <button
+                                        className="hover:scale-105"
+                                        onClick={() => {
+                                            navigator.clipboard.writeText(selectedBook.volumeInfo.infoLink);
+                                            alert("📋 Book link copied!");
+                                        }}
+                                    >
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-copy-icon lucide-copy"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                                    </button>
+
+                                    {/* Share button (if supported) */}
+                                    {navigator.share && (
+                                        <button
+                                            className="hover:scale-105"
+                                            onClick={() => {
+                                                navigator.share({
+                                                    title: selectedBook.volumeInfo.title,
+                                                    text: "Check out this book!",
+                                                    url: selectedBook.volumeInfo.infoLink,
+                                                });
+                                            }}
+                                        >
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-share2-icon lucide-share-2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" x2="15.42" y1="13.51" y2="17.49"/><line x1="15.41" x2="8.59" y1="6.51" y2="10.49"/></svg>
+                                        </button>
+                                    )}
+                                </div>
+
                                 {selectedBook.infoLink && selectedBook.previewLink &&
                                     selectedBook.infoLink !== selectedBook.previewLink && (
                                         <button className='bg-white rounded active:bg-yellow-100 border shadow mt-3 p-2 hover:scale-105'>
